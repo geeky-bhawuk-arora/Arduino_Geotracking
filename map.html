@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GPS Map</title>
+  <script>
+    function loadMap() {
+      fetch('http://your-server.com/gpsdata.json') // Replace with your server's address
+        .then(response => response.json())
+        .then(data => {
+          const mapDiv = document.getElementById('map');
+          const map = new google.maps.Map(mapDiv, {
+            center: { lat: data.latitude, lng: data.longitude },
+            zoom: 15
+          });
+
+          new google.maps.Marker({
+            position: { lat: data.latitude, lng: data.longitude },
+            map: map
+          });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=loadMap" async defer></script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+</body>
+
+</html>
